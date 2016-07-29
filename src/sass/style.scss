@@ -1,0 +1,45 @@
+@import "lib/_variables.scss";
+@import "lib/_reset.scss";
+
+
+/****************************************
+ **             BASELINE               **
+ ****************************************/
+
+body {
+  font-family: $basefont;
+}
+
+/****************************************
+ **              OBJECTS               **
+ ****************************************/
+
+
+/****************************************
+ **            COMPONENTS              **
+ ****************************************/
+
+.c-header {
+  background: $headerbkg;
+  color: $white;
+  padding: 1em 1.5em;
+  text-align: center;
+}
+
+.c-title {
+  font-weight: normal;
+  letter-spacing: .3em;
+  margin: .4em 0;
+
+
+  &--heavy {
+    font-weight: bold;
+  }
+
+  &--h1 { font-size: 1.5em; line-height: 100%; text-transform: uppercase; }
+  &--h2 { font-size: 1.5em; line-height: 100%; }
+  &--h3 {}
+  &--h4 {}
+  &--h5 {}
+  &--h6 {}
+}
