@@ -8,10 +8,10 @@ var concat = require('gulp-concat');
 
 gulp.task('js', function() {
   gulp.src('./src/js/*.js')
-    .pipe(sourcemaps.init())
+    //.pipe(sourcemaps.init())
       .pipe(concat('all.js'))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('dist'));
+    //.pipe(sourcemaps.write())
+    .pipe(gulp.dest('./js'));
 });
 
 gulp.task('scripts', function() {
