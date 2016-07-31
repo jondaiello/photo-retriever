@@ -1,6 +1,6 @@
 @import "lib/_variables.scss";
 @import "lib/_reset.scss";
-
+@import "lib/_animations.scss";
 
 /****************************************
  **             BASELINE               **
@@ -115,4 +115,29 @@ body {
   .c-preview {
     flex-basis: auto;
   }
+}
+
+.c-details {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.8) none repeat scroll 0% 0%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__img {
+    object-fit: contain;
+    max-height: 100%;
+    max-width: 100%;
+  }
+}
+
+
+
+.a-fadein {
+  animation: fadeIn .5s ease-out 0s 1;
 }
