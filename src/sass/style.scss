@@ -14,6 +14,10 @@ body {
  **              OBJECTS               **
  ****************************************/
 
+.o-photo-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
 
 /****************************************
  **            COMPONENTS              **
@@ -31,6 +35,18 @@ body {
   letter-spacing: .3em;
   margin: .4em 0;
 
+  &__img {
+    width: 1.5em;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: -.1em;
+    margin-right: .25em;
+
+    path {
+      fill: #fff;
+    }
+  }
 
   &--heavy {
     font-weight: bold;
@@ -42,4 +58,61 @@ body {
   &--h4 {}
   &--h5 {}
   &--h6 {}
+}
+
+.c-preview {
+  flex-grow: 1;
+  background: $black;
+  overflow: hidden;
+  position: relative;
+  flex-basis: 100%;
+
+  &::after {
+    width: 40px;
+    height: 40px;
+    border: 2px solid $white;
+    border-radius: 40px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -20px 0 0 -20px;
+    content: "+";
+    text-align: center;
+    color: $white;
+    font-size: 2em;
+    line-height: 40px;
+    opacity: 0;
+    background: rgba(0,0,0,.5);
+    box-shadow: 0 0 20px 0 rgba(0,0,0,.5);
+    transform: scale(.7, .7);
+    transition: all .3s ease-out;
+  }
+
+  &__img {
+    display: block;
+    width: 33.3333333vw;
+    object-fit: cover;
+    height: 33.3333333vw;
+    transition: all .3s ease-out;
+    transform: scale(1, 1);
+  }
+
+  &:hover &__img {
+    opacity: .4;
+    transform: scale(1.1, 1.1);
+  }
+
+  &:hover {
+    &::after {
+      transform: scale(1, 1);
+      opacity: 1;
+    }
+  }
+}
+
+
+@media all and (min-width:480px) {
+  .c-preview {
+    flex-basis: auto;
+  }
 }
