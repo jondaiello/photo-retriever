@@ -192,6 +192,7 @@ function expandPhoto(e) {
   displayDetails( this.getAttribute('data-img-id'), this.getAttribute('data-img-index') );
 }
 
+
 /*
  * This function will return the photos from our source defined above
  */
