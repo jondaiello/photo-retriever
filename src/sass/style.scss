@@ -8,11 +8,16 @@
 
 body {
   font-family: $basefont;
+  background: $black;
 }
 
 img {
-  background: transparent url(../img/loading.gif) no-repeat center center;
+  background: transparent url(../img/loader.gif) no-repeat center center;
   background-size: 60px 60px;
+}
+
+button, a {
+  outline: none;
 }
 
 /****************************************
@@ -39,6 +44,7 @@ img {
   font-weight: normal;
   letter-spacing: .3em;
   margin: .4em 0;
+  line-height: 100%;
 
   &__img {
     width: 1.5em;
@@ -47,6 +53,7 @@ img {
     position: relative;
     top: -.1em;
     margin-right: .25em;
+    height: 1em;
 
     path {
       fill: #fff;
@@ -115,10 +122,9 @@ img {
   }
 }
 
-
 @media all and (min-width:480px) {
   .c-preview {
-    flex-basis: auto;
+    flex-basis: 33%;
   }
 }
 
@@ -238,6 +244,19 @@ img {
       transform-origin: 100% 0;
     }
   }
+}
+
+/****************************************
+ **             UTILITIES              **
+ ****************************************/
+
+.u-invisible {
+  visibility: hidden;
+}
+
+.u-objectfit-fix {
+  background-size: cover;
+  background-position: center;
 }
 
 

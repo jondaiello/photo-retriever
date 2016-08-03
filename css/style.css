@@ -420,11 +420,15 @@ textarea {
  **             BASELINE               **
  ****************************************/
 body {
-  font-family: "San Francisco", Frutiger, "Frutiger Linotype", Univers, Calibri, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  font-family: "San Francisco", Frutiger, "Frutiger Linotype", Univers, Calibri, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: #000; }
 
 img {
-  background: transparent url(../img/loading.gif) no-repeat center center;
+  background: transparent url(../img/loader.gif) no-repeat center center;
   background-size: 60px 60px; }
+
+button, a {
+  outline: none; }
 
 /****************************************
  **              OBJECTS               **
@@ -437,7 +441,7 @@ img {
  **            COMPONENTS              **
  ****************************************/
 .c-header {
-  background: #1C1100;
+  background: #111122;
   color: #fff;
   padding: 1em 1.5em;
   text-align: center; }
@@ -445,14 +449,16 @@ img {
 .c-title {
   font-weight: normal;
   letter-spacing: .3em;
-  margin: .4em 0; }
+  margin: .4em 0;
+  line-height: 100%; }
   .c-title__img {
     width: 1.5em;
     display: inline-block;
     vertical-align: middle;
     position: relative;
     top: -.1em;
-    margin-right: .25em; }
+    margin-right: .25em;
+    height: 1em; }
     .c-title__img path {
       fill: #fff; }
   .c-title--heavy {
@@ -506,7 +512,7 @@ img {
 
 @media all and (min-width: 480px) {
   .c-preview {
-    flex-basis: auto; } }
+    flex-basis: 33%; } }
 
 .c-details {
   position: fixed;
@@ -595,6 +601,16 @@ img {
   .c-btn--next::after {
     transform: rotate(45deg);
     transform-origin: 100% 0; }
+
+/****************************************
+ **             UTILITIES              **
+ ****************************************/
+.u-invisible {
+  visibility: hidden; }
+
+.u-objectfit-fix {
+  background-size: cover;
+  background-position: center; }
 
 /****************************************
  **            ANIMATIONS              **
