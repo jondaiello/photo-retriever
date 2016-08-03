@@ -6,10 +6,10 @@ var photoData, photoPreviews;
 /*
  * This will build the preview blocks and put them on the page.
  */
-function buildPreview(imgURL, imgID, imgIndex) {
+function buildPreview(imgPreviewURL, imgFullURL, imgID, imgIndex) {
   // 1. Create an <a> element as our link
   var a = document.createElement('a');
-  a.href = imgURL;
+  a.href = imgFullURL;
   a.target = "_blank";
   a.className = "c-preview";
   a.setAttribute('data-img-id', imgID);
@@ -17,7 +17,7 @@ function buildPreview(imgURL, imgID, imgIndex) {
 
   // 2. Create the image and append it to the <a>
   var img = document.createElement('img');
-  img.src = imgURL;
+  img.src = imgPreviewURL;
   img.className = "c-preview__img";
   a.appendChild(img);
 
@@ -30,7 +30,7 @@ function displayDetails(photoID, photoIndex) {
   var photoDetails = photoData[photoIndex];
 
   // define some necessary variables below
-  var detailsContainer, fullPhoto;
+  var detailsContainer, fullPhoto, prevBtn, nextBtn;
 
   // look to see if the #photo-detail is already present.
   if ( document.getElementById('photo-detail') ) {
@@ -49,30 +49,131 @@ function displayDetails(photoID, photoIndex) {
     detailsContainer.className = "c-details";
     detailsContainer.classList.add('a-fadein');
 
+    // create the previous and next buttons
+    prevBtn = document.createElement('button');
+    prevBtn.className = "c-btn--prev c-btn--arrow-left";
+    prevBtn.id = "prev-btn";
+    prevBtn.innerHTML = "Previous";
+    prevBtn.addEventListener('click', function() {
+      loadPreviousPhoto();
+    });
+
+    nextBtn = document.createElement('button');
+    nextBtn.className = "c-btn--next c-btn--arrow-right";
+    nextBtn.id = "next-btn";
+    nextBtn.innerHTML = "Next";
+    nextBtn.addEventListener('click', function() {
+      loadNextPhoto();
+    });
+
     // create our full photo preview here
     fullPhoto = document.createElement('img');
     fullPhoto.id = "photo-detail__img";
-    fullPhoto.className = "c-details__img";
+    fullPhoto.classList.add("c-details__img");
+    fullPhoto.classList.add("a-fadeindown");
     fullPhoto.src = photoDetails.urls.regular;
-    fullPhoto.setAttribute('alt', photoDetails.user.name);
+    fullPhoto.setAttribute('data-img-id', photoID);
+    fullPhoto.setAttribute('data-img-index', photoIndex);
+    fullPhoto.setAttribute('alt', "Photo by " + photoDetails.user.name);
 
     // we'll also create our close button too
     var closeBtn = document.createElement('button');
     closeBtn.id = "photo-detail__close";
-    closeBtn.className = ".c-btn--close";
+    closeBtn.className = "c-btn--close";
     closeBtn.innerHTML = "Close";
-    closeBtn.addEventListener( 'click', function() {
+    closeBtn.addEventListener('click', function() {
       document.getElementById("photo-detail").remove();
     } );
 
-    // then add the close button to the detailsContainer
-    detailsContainer.appendChild(closeBtn);
-    detailsContainer.appendChild(fullPhoto);
+
+    detailsContainer.appendChild(prevBtn); // add the previous button to the detailsContainer
+    detailsContainer.appendChild(nextBtn); // add the next button to the detailsContainer
+    detailsContainer.appendChild(closeBtn); // add the close button to the detailsContainer
+    detailsContainer.appendChild(fullPhoto); // add the photo to the detailsContainer
 
     // then add the #photo-detail to the page
     document.body.appendChild(detailsContainer);
   }
 }
+
+
+/*
+ * Remove current photo from detail view
+ */
+
+function swapDetailPhotos(currentPhoto, currentIndex, incrementDirection) {
+  var nextPhotoIndex, fadeDirection;
+  currentIndex = parseInt(currentIndex);
+
+  // set the fadeDirection of the images based upon the direction the user chose to proceed
+  if (incrementDirection === "prev") { fadeDirection = "right"; }
+  if (incrementDirection === "next") { fadeDirection = "left"; }
+
+  // we'll prepare the photo for removal with some animations and a new id
+  currentPhoto.classList.remove("a-fadeindown");
+  currentPhoto.classList.add("a-fadeout" + fadeDirection);
+  currentPhoto.id = "previous-photo"; // this is no longer the current photo, so give it a new id so we don't conflict in the DOM
+  currentPhoto.addEventListener("animationend", function () {
+    // once the CSS animation has ended, we'll remove the old photo
+    currentPhoto.remove();
+
+    // after that,  we'll load a new one...
+
+    // start by getting an accurate index of the photos we loaded
+
+    if ( incrementDirection === "prev" ) {
+      // if we need the previous photo, work toward a negative index value
+
+      if ( currentIndex === 0 ) {
+        nextPhotoIndex = parseInt(photoData.length) - 1;
+      } else {
+        nextPhotoIndex = currentIndex - 1;
+      }
+    } else {
+      // if we need the next photo increment upwards
+
+      if ( currentIndex >= ( photoData.length - 1 ) ) {
+        nextPhotoIndex = 0;
+      } else {
+        nextPhotoIndex = currentIndex + 1;
+      }
+    }
+
+    var newPhoto = document.createElement("img");
+    newPhoto.classList.add('c-details__img');
+    newPhoto.classList.add('a-fadein' + fadeDirection);
+    newPhoto.setAttribute('data-img-index', nextPhotoIndex);
+    newPhoto.id = "photo-detail__img";
+    newPhoto.src = photoData[nextPhotoIndex].urls.regular;
+
+    document.getElementById("photo-detail").appendChild(newPhoto);
+  });
+}
+
+
+/*
+ * Load the Previous Photo
+ */
+
+function loadPreviousPhoto() {
+  var currentPhoto = document.getElementById("photo-detail__img");
+  var currentIndex = currentPhoto.getAttribute('data-img-index');
+
+  swapDetailPhotos(currentPhoto, currentIndex, "prev");
+}
+
+
+/*
+ * Load the Next Photo
+ */
+
+function loadNextPhoto() {
+  var currentPhoto = document.getElementById("photo-detail__img");
+  var currentIndex = currentPhoto.getAttribute('data-img-index');
+
+  swapDetailPhotos(currentPhoto, currentIndex, "next");
+}
+
 
 /*
  * We will use this to expand our photos
@@ -81,6 +182,7 @@ function expandPhoto(e) {
   // 1. stop the link from opening in a new tab
   e.preventDefault();
 
+  // 2. display the details view of the photo
   displayDetails( this.getAttribute('data-img-id'), this.getAttribute('data-img-index') );
 }
 
@@ -101,7 +203,7 @@ function getPhotos() {
 
       // 5. For each photo returned, buildPreview()
       photoData.forEach(function(e, i) {
-        buildPreview(e.urls.small, e.id, i);
+        buildPreview(e.urls.small, e.urls.regular, e.id, i);
 
         // 6. When we have all of the photos on the page, querySelectorAll of them!
         if ( (i + 1) === photoData.length ) {
