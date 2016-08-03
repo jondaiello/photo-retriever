@@ -366,17 +366,65 @@ textarea {
 
 @keyframes fadeIn {
   0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+@keyframes fadeInDown {
+  0% {
     opacity: 0;
     transform: translate(0, -50px); }
   100% {
     opacity: 1;
     transform: translate(0, 0); } }
 
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translate(-50px, 0); }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0); } }
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translate(50px, 0); }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0); } }
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+
+@keyframes fadeOutLeft {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0); }
+  100% {
+    opacity: 0;
+    transform: translate(-50px, 0); } }
+
+@keyframes fadeOutRight {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0); }
+  100% {
+    opacity: 0;
+    transform: translate(50px, 0); } }
+
 /****************************************
  **             BASELINE               **
  ****************************************/
 body {
   font-family: "San Francisco", Frutiger, "Frutiger Linotype", Univers, Calibri, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+img {
+  background: transparent url(../img/loading.gif) no-repeat center center;
+  background-size: 60px 60px; }
 
 /****************************************
  **              OBJECTS               **
@@ -476,5 +524,98 @@ body {
     max-height: 100%;
     max-width: 100%; }
 
+.c-btn--close {
+  position: absolute;
+  top: 2.5%;
+  right: 2.5%;
+  background: transparent;
+  border: 0;
+  text-indent: -9999em;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  border-radius: 40px; }
+  .c-btn--close::before, .c-btn--close::after {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 25px;
+    background: #fff;
+    position: absolute;
+    left: 18px;
+    top: 8px; }
+  .c-btn--close::before {
+    transform: rotate(45deg); }
+  .c-btn--close::after {
+    transform: rotate(-45deg); }
+
+.c-btn--prev, .c-btn--next {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  text-indent: -9999em;
+  background: transparent;
+  border: 0;
+  width: 60px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.5);
+  display: block;
+  z-index: 1000;
+  margin-top: -30px;
+  transition: all .2s ease-out;
+  cursor: pointer; }
+  .c-btn--prev:hover, .c-btn--next:hover {
+    width: 70px;
+    background: black; }
+  .c-btn--prev::before, .c-btn--prev::after, .c-btn--next::before, .c-btn--next::after {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 25px;
+    background: #fff;
+    position: absolute;
+    left: auto;
+    right: 40px;
+    top: 30px;
+    transform: rotate(-135deg);
+    transform-origin: 1px 0; }
+  .c-btn--prev::after, .c-btn--next::after {
+    transform: rotate(-45deg);
+    transform-origin: 0 0; }
+
+.c-btn--next {
+  left: auto;
+  right: 0; }
+  .c-btn--next::before, .c-btn--next::after {
+    left: 38px; }
+  .c-btn--next::before {
+    transform: rotate(-225deg);
+    transform-origin: 1px 0; }
+  .c-btn--next::after {
+    transform: rotate(45deg);
+    transform-origin: 100% 0; }
+
+/****************************************
+ **            ANIMATIONS              **
+ ****************************************/
 .a-fadein {
   animation: fadeIn .5s ease-out 0s 1; }
+
+.a-fadeindown {
+  animation: fadeInDown .5s ease-out 0s 1; }
+
+.a-fadeinright {
+  animation: fadeInRight .5s ease-out 0s 1; }
+
+.a-fadeinleft {
+  animation: fadeInLeft .5s ease-out 0s 1; }
+
+.a-fadeout {
+  animation: fadeOut .5s ease-out 0s 1; }
+
+.a-fadeoutleft {
+  animation: fadeOutLeft .5s ease-out 0s 1; }
+
+.a-fadeoutright {
+  animation: fadeOutRight .5s ease-out 0s 1; }

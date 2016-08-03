@@ -10,6 +10,11 @@ body {
   font-family: $basefont;
 }
 
+img {
+  background: transparent url(../img/loading.gif) no-repeat center center;
+  background-size: 60px 60px;
+}
+
 /****************************************
  **              OBJECTS               **
  ****************************************/
@@ -137,7 +142,133 @@ body {
 }
 
 
+.c-btn {
+  &--close {
+    position: absolute;
+    top: 2.5%;
+    right: 2.5%;
+    background: transparent;
+    border: 0;
+    text-indent: -9999em;
+    width: 40px;
+    height: 40px;
+    background: rgba(0,0,0,.5);
+    cursor: pointer;
+    border-radius: 40px;
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      width: 2px;
+      height: 25px;
+      background: $white;
+      position: absolute;
+      left: 18px;
+      top: 8px;
+    }
+
+    &::before {
+      transform: rotate(45deg);
+    }
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
+
+  &--prev,
+  &--next {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    text-indent: -9999em;
+    background: transparent;
+    border: 0;
+    width: 60px;
+    height: 60px;
+    background: rgba(0,0,0,.5);
+    display: block;
+    z-index: 1000;
+    margin-top: -30px;
+    transition: all .2s ease-out;
+    cursor: pointer;
+
+    &:hover {
+      width: 70px;
+      background: rgba(0,0,0,1);
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      width: 2px;
+      height: 25px;
+      background: $white;
+      position: absolute;
+      left: auto;
+      right: 40px;
+      top: 30px;
+      transform: rotate(-135deg);
+      transform-origin: 1px 0;
+    }
+
+    &::after {
+      transform: rotate(-45deg);
+      transform-origin: 0 0;
+    }
+  }
+
+  &--next {
+    left: auto;
+    right: 0;
+
+    &::before,
+    &::after {
+      left: 38px;
+    }
+
+    &::before {
+      transform: rotate(-225deg);
+      transform-origin: 1px 0;
+    }
+
+    &::after {
+      transform: rotate(45deg);
+      transform-origin: 100% 0;
+    }
+  }
+}
+
+
+/****************************************
+ **            ANIMATIONS              **
+ ****************************************/
 
 .a-fadein {
   animation: fadeIn .5s ease-out 0s 1;
+}
+
+.a-fadeindown {
+  animation: fadeInDown .5s ease-out 0s 1;
+}
+
+.a-fadeinright {
+  animation: fadeInRight .5s ease-out 0s 1;
+}
+
+.a-fadeinleft {
+  animation: fadeInLeft .5s ease-out 0s 1;
+}
+
+.a-fadeout {
+  animation: fadeOut .5s ease-out 0s 1;
+}
+
+.a-fadeoutleft {
+  animation: fadeOutLeft .5s ease-out 0s 1;
+}
+
+.a-fadeoutright {
+  animation: fadeOutRight .5s ease-out 0s 1;
 }
